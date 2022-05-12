@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Update Student</title>
+</head>
+<body>
+	<form th:action="@{/ticket/update}" method = "post">
+		<label>ID: </label><br>
+		<input name="id" th:value="${ticket.id}">
+		<br>
+		<label>Name: </label><br>
+		<input name="name" th:value="${ticket.name}" >
+		<br>
+		<button type = "submit">Save</button>
+	</form>
+</body>
+</html>

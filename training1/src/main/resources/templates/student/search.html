@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<form th:action="@{/student/search}" method="get">
+		<input name="keyword" placeholder="Tim theo ten">
+		<button>Search</button>
+	</form>
+	
+	<div th:each="student : ${studentList}">
+		<p>
+			<span>ID:</span> <span th:text="${student.id}"></span>
+		</p>
+		<p>
+			<span>Name:</span> <span th:text="${student.name}"></span>
+		</p>
+		<p>
+			<a th:href="@{'/student/delete?id=' + ${student.id}}">Delete</a> <a
+				th:href="@{'/student/update?id=' + ${student.id}}">Update</a>
+		</p>
+	</div>
+</body>
+</html>

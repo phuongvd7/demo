@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>Tieu De 1</h1>
+	<h2>Tieu De 2</h2>
+	<p> doan van ban </p>
+	<a href="http:google.com">Click here</a>
+	
+	// dung phuong thuc get => du lieu truyen len bi han che => post // dung dc du lieu lon, 
+	//dung get se co ?
+	// dung post thi an di => phai dung tool
+<form action = "/qlsvweb/create-course" method ="post">
+  <label>ID: </label>
+  <br>
+  <input type="number" name="cid" value=""> 
+  <br>
+  <label>Name: </label>
+  <br>
+  <input type="text" name="cname" value="">
+  <br> <button type = "submit">Create</button>
+</form>
+	
+</body>
+</html>
+
+
+<form action = "/qlsvweb/create-student" method ="post">
+  <label>ID: </label>
+  <br>
+  <input type="number" name="person_id" value=""> 
+  <br>
+  <label>student_code: </label>
+  <br>
+  <input type="text" name="student_code" value="">
+  <br> <button type = "submit">Create</button>
+</form>
+	
+</body>
+</html>
+
+<form action = "/qlsvweb/create-course" method ="post">
+  <label>ID: </label>
+  <br>
+  <input type="number" name="cid" value="'"  + id + "'">
+  <br>
+  <label>Name: </label>
+  <br>
+  <input type="text" name="cname" value="'"  + name + "'">
+  <br> <button type = "submit">Create</button>
+</form>
+
+

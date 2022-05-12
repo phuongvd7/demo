@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<form th:action="@{/department/create}" method = "post">
+		<label>ID: </label><br>
+		<input name="id" >
+		<br>
+		<label>Name: </label><br>
+		<input name="name">
+		<br>
+		 <label>Start Date: </label><br> <input name="start_date" placeholder="dd/MM/yyyy" class="form-control">
+		<br>
+		<button type = "submit">Create</button>
+	</form>
+	<p th:text="${msg}"></p>
+	<p th:text="${key}"></p>
+</body>
+</html>

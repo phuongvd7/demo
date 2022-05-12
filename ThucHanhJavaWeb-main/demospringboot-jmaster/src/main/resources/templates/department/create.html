@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html layout:decorator="home.html">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Create Department</title>
+</head>
+<body>
+	<div layout:fragment="content" class="col-12 col-sm-9">
+		<div class="row">
+			<h6 th:text="#{department.create}"></h6><!-- dau # dung de doc message -->
+		</div>
+		<hr/>
+		<div class="row">
+			<form th:object="${department}" th:action="@{/department/create}" method="post">
+				<div class="mb-3">
+					<label class="form-label" th:text="#{department.name}"></label> 
+					<input type="text" th:field="*{name}" class="form-control" ><!-- thay vi request param thi ta keo name modelatribute de su dung duoc validate => keo object sang giao dien view va keo object va field  cho cac thuoc tinh tuong ung  -->
+					<p th:errors="*{name}"></p> <!--  spring form, map doi tuong vao trong form, sau do map nguoc form ve doi tuong -->
+				</div>
+				<div class="mb-3">
+					<button class="btn btn-primary" type="submit">Save</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

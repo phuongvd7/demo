@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html layout:decorator="home.html"> <!--  extend lai file home --> 
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Search Customer</title>
+</head>
+<body>
+  <div layout:fragment="content" class="col-12 col-sm-9">	
+		<div class="row">
+			<form th:action="@{/customer/search}" method="get">
+				<div class="row">
+					<div class="col-12 col-md-4">
+						<input type="text" class="form-control" name="customer_name"
+							placeholder="Tìm kiếm theo ten:...">
+					</div>
+					<div class="col-12 col-md-4">
+						<input type="text" class="form-control" name="customer_id"
+							placeholder="Tìm kiếm theo customer_id:...">
+					</div>
+					<div class="col-12 col-md-2">
+						<button type="submit" class="btn btn-primary">Search</button>
+					</div>
+					<div class="col-12 col-md-2">
+						<a th:href="@{/customer/create}" class="btn btn-secondary">Add</a>
+					</div>
+				</div>
+			</form>
+		</div>
+		<hr />
+		<div class="row">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>Customer customer_id</th>
+						<th>customer_name</th>
+						<th>Address</th>
+						<th>Phone Number</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="customer : ${list}">
+						<td th:text="${customer.customer_id}"></td>
+						<td th:text="${customer.customer_name}"></td>
+						<td th:text="${customer.address}"></td>
+						<td th:text="${customer.sdt}"></td>
+						<td><a class="text-danger" 
+							th:href="@{'/customer/delete?customer_id=' + ${customer.customer_id}}">Delete</a>
+							<a th:href="@{'/customer/update?customer_id=' + ${customer.customer_id}}">Update</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<ul class="pagination">
+<!--  				<li class="page-item"><a class="page-link" 
+				th:href="@{'/customer/search?page='+ ${page - 1 < 0 ? 0 : (page - 1)} + '&customer_name=' + ${customer_name}}">Previous</a></li>
+
+				<li th:if="${totalPage > 0}" th:each="i: ${#numbers.sequence(0, totalPage - 1)}"
+					class="page-item"><a class="page-link"
+					th:href="@{'/customer/search?page='+ ${i} + '&customer_name=' + ${customer_name} }" th:text="${i}"></a></li>
+
+				<li class="page-item"><a class="page-link"
+						th:href="@{'/customer/search?page='+ ${page + 1 >= totalPage ? (totalPage - 1) : (page + 1) } + '&customer_name=' + ${customer_name}}">Next</a></li> -->
+				<li class="page-item" th:if="${totalPage > 0}"	><a class="page-link"
+					th:href="@{'/customer/search?page='+ ${page - 1 < 0 ? 0 : (page - 1)}}">Previous</a></li>
+
+				<li th:if="${totalPage > 0}"
+					th:each="i: ${#numbers.sequence(0, totalPage - 1)}"
+					class="page-item"><a class="page-link"
+					th:href="@{'/customer/search?page='+ ${i}}" th:text="${i}"></a></li>
+
+				<li class="page-item" th:if="${totalPage > 0}"><a class="page-link"
+					th:href="@{'/customer/search?page='+ ${page + 1 >= totalPage ? (totalPage - 1) : (page + 1) }}">Next</a></li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>

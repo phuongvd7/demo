@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html layout:decorator="home.html">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Create Department</title>
+</head>
+<body>
+	<div layout:fragment="content" class="col-12 col-sm-9">
+		<div class="row">
+			<h6>Update Ticket</h6>
+		</div>
+		<hr/>
+		<div class="row">
+			<form th:action="@{/ticket/update}" method="post">
+				<div class="mb-3">
+					<label class="form-label">Id:</label> 
+					<input readonly="readonly" th:value="${ticket.ticketId}" type="text" name="ticketId" class="form-control" >
+				</div>
+				<div class="mb-3">
+					<label class="form-label">content:</label>
+					<textarea name="content" th:text="${ticket.content}" class="form-control">
+					</textarea>
+				</div>
+				<div class="mb-3">
+					<label class="form-label">processContent:</label>
+					<textarea name="processContent" th:text="${ticket.processContent}" class="form-control">
+					</textarea>
+				</div>
+				<div class="mb-3">
+					<label class="form-label">customerPhone:</label> <input type="text"
+						name="customerPhone" th:value="${ticket.customerPhone}" class="form-control">
+				</div>
+				<div class="mb-3">
+					<label class="form-label">customerName:</label> <input type="text"
+						name="customerName" class="form-control">
+				</div>
+				<div class="mb-3">
+					<label class="form-label">status:</label> 
+					<input type="checkbox" th:checked="${ticket.status}"
+						value="true" name="status">
+				</div>
+				<div class="mb-3">
+					<label class="form-label">department:</label> <select
+						name="department.id" class="form-control">
+						
+						<option th:each="d : ${departments}" th:value="${d.id}"
+							th:text="${d.name}" th:selected="${d.id == ticket.department.id}"></option>
+					</select>
+				</div>
+				<div class="mb-3">
+						<label class="col">From:</label> 
+						<input th:value="${#dates.format(ticket.createdAt, 'yyyy-MM-dd')}" 
+						type="date" name="created_date"
+								class="form-control col" >
+				</div>
+				<div class="mb-3">
+					<button class="btn btn-primary" type="submit">Save</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html layout:decorator="home.html">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Search Department</title>
+
+</head>
+<body>
+	<div layout:fragment="content" class="col-12 col-sm-9">
+		<div class="row">
+			<form th:action="@{/ticket/search}" method="get">
+				<div class="row">
+					<div class="col-12 col-md-4">
+						<input th:value="${name}" name="name" type="text" class="form-control"
+							placeholder="Tìm kiếm khiếu nại:.sdt..">
+					</div>
+					<div class="col-12 col-md-2">
+						<div class="row">
+							<label class="col">Phòng ban:</label> 
+							<select name="departmentId" class="form-select col">
+								<option value="">Chọn</option>
+								<option th:each="d : ${departments}" th:value="${d.id}"
+								th:text="${d.name}" th:selected="${d.id == departmentId}"></option>
+							</select>
+						</div>
+					</div>
+					<div class="col-12 col-md-2">
+						<div class="row">
+							<label class="col">From:</label> 
+							<input th:value="${fromDate}" type="date" name="fromDate"
+								class="form-control col" placeholder="dd/MM/yyyy">
+						</div>
+					</div>
+					<div class="col-12 col-md-2">
+						<div class="row">
+							<label class="col">To:</label> 
+							<input th:value="${toDate}" type="date" name="toDate"
+								class="form-control col" placeholder="dd/MM/yyyy">
+						</div>
+					</div>
+					<div class="col-12 col-md-1">
+						<button type="submit" class="btn btn-primary">Search</button>
+					</div>
+					<div class="col-12 col-md-1">
+						<a th:href="@{/ticket/create}" class="btn btn-secondary">Add</a>
+					</div>
+				</div>
+			</form>
+		</div>
+		<hr />
+		<div class="row">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Customer Phone</th>
+						<th>Customer Name</th>
+						<th>Department</th>
+						<th>Status</th>
+						<th>CreatedAt</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="ticket : ${list}">
+						<td th:text="${ticket.ticketId}"></td>
+						<td th:text="${ticket.customerPhone}"></td>
+						<td th:text="${ticket.customerName}"></td>
+						<td th:text="${ticket.department.name}"></td>
+						<td th:text="${ticket.status}"></td>
+						<td th:text="${#dates.format(ticket.createdAt, 'dd-MM-yyyy')}"></td>
+						<td><a class="text-danger"
+							th:href="@{'/ticket/delete?id=' + ${ticket.ticketId}}">Delete</a>
+							<a th:href="@{'/ticket/update?id=' + ${ticket.ticketId}}">Update</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<ul class="pagination">
+				<li th:if="${totalPage > 0}" class="page-item"><a
+					class="page-link"
+					th:href="@{'/ticket/search?page='+ ${page - 1 < 0 ? 0 : (page - 1)} + '&name=' + ${name} + '&departmentId=' + ${departmentId} + '&fromDate=' + ${fromDate} + '&toDate=' + ${toDate}}">Previous</a></li>
+
+				<li th:if="${totalPage > 0}"
+					th:each="i: ${#numbers.sequence(0, totalPage - 1)}"
+					class="page-item"><a class="page-link"
+					th:href="@{'/ticket/search?page='+ ${i} + '&name=' + ${name} + '&departmentId=' + ${departmentId} + '&fromDate=' + ${fromDate} + '&toDate=' + ${toDate} }"
+					th:text="${i}"></a></li>
+
+				<li th:if="${totalPage > 0}" class="page-item"><a
+					class="page-link"
+					th:href="@{'/ticket/search?page='+ ${page + 1 >= totalPage ? (totalPage - 1) : (page + 1) } + '&name=' + ${name} + '&departmentId=' + ${departmentId} + '&fromDate=' + ${fromDate} + '&toDate=' + ${toDate}}">Next</a></li>
+
+			</ul>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<div layout:fragment="content" class="col-12 col-sm-9">
+		<div class="row">
+			<h5>Create department</h5>
+				<div class="row">
+				
+					<form th:action="@{/department/create}" method="post">
+					<div class="mb-3">
+    <label  class="form-label">name</label>
+    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+  </div>
+						<label>ID: </label><br> <input name="id"> <br>
+						<label>Name: </label><br> <input name="name"> <br>
+						<label>Start Date: </label><br> <input name="start_date"
+							placeholder="dd/MM/yyyy" class="form-control"> <br>
+						<button type="submit">Create</button>
+					</form>
+					<p th:text="${msg}"></p>
+					<p th:text="${key}"></p>
+</body>
+</html>

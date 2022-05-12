@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html layout:decorator="home.html">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Create Department</title>
+</head>
+<body>
+	<div layout:fragment="content" class="col-12 col-sm-9">
+		<div class="row">
+			<h6>Create Department</h6>
+		</div>
+		<hr/>
+		<div class="row">
+			<form th:action="@{/ticket/create}" method="post">
+				<div class="mb-3">
+					<label class="form-label">content:</label> 
+					<textarea type="text" name="content" class="form-control" ></textarea>
+				</div>
+				<div class="mb-3">
+					<label class="form-label">processContent:</label> 
+					<textarea type="text" name="processContent" class="form-control" ></textarea>
+				</div>
+								<div class="mb-3">
+					<label class="form-label">customerPhone:</label> 
+					<input type="text" name="customer Phone" class="form-control" ></input>
+				</div>
+								<div class="mb-3">
+					<label class="form-label">customerName:</label> 
+					<input type="text" name="customer Name" class="form-control" ></input>
+				</div>
+								<div class="mb-3">
+					<label class="form-label">status:</label> 
+					<input type="checkbox" name="status" class="form-control" ></input>
+				</div>
+				<div class="mb-3">
+					<label class="form-label">department:</label> 
+					<select name="department.id" class="form-control"> <!-- department la 1 class => neu dung attribue o ben kia thi dung department.id o ben nay-->
+						<!-- lam giong date, tao 1 department kieu param rieng-->
+						<option th:each="d : ${departments}" th:value="${d.id}"
+							th:text="${d.name}"></option>
+					</select>
+				</div> 
+					
+				<div class="mb-3">
+					<button class="btn btn-primary" type="submit">Save</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
