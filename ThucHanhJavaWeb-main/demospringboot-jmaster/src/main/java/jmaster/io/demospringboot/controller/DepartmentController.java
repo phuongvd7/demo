@@ -78,13 +78,21 @@ public class DepartmentController {
 	public String search(Model model, @RequestParam(name = "name", required = false) String name,
 			@RequestParam(name = "id", required = false) Integer id,
 			@RequestParam(name = "page", required = false) Integer page,
-			@RequestParam(name = "size", required = false) Integer size) {
+			@RequestParam(name = "size", required = false) Integer size,
+			@RequestParam(name = "sortBy", required = false) String sortBy) {
 
 		if (size == null)
 			size = 3;// max records per page
 		if (page == null)
 			page = 0;// trang hien tai
-
+		Sort sort = Sort.by("id").ascending();
+		
+		if(sortBy != null && sortBy.equals("name")) {
+			sort = Sort.by("name").ascending();
+		} else if (sortBy != null && sortBy.equals("date")) {
+			sort = Sort.by("createdAt").ascending();
+		}
+		
 		Pageable pageable = PageRequest.of(page, size, Sort.by("id").ascending());
 
 		if (name != null && !name.isEmpty()) {
@@ -119,8 +127,9 @@ public class DepartmentController {
 			model.addAttribute("totalPage", pageDatepartment.getTotalPages());
 			model.addAttribute("page", page);
 			model.addAttribute("size", size);
-			model.addAttribute("name", name);
-			model.addAttribute("id", id);
+			model.addAttribute("name", name == null ? "" : name);
+			model.addAttribute("id", id == null ? "" : id);
+			model.addAttribute("sortBy", sortBy == null ? "" : sortBy);
 		}
 		return "department/search";
 	}

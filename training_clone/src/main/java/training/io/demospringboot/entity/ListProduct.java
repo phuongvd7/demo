@@ -18,12 +18,11 @@ import lombok.Data;
 public class ListProduct {
 	
 	@Id
-	@Column(name = "listproduct_id")
+	@Column(name = "id_listproduct")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
-	private int id_listproduct;
+	private int id;
+	private double price;
 	private int quantity;
-	private long price_list; 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "product_id")
 	private Product product;

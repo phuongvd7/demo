@@ -7,6 +7,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +30,15 @@ public class CustomerController {
 	CustomerRepo customerRepo;
 	
 	@GetMapping("/create")
-	public String create(Model model) {
+//	@Secured(value = {"ROLE_ADMIN"})
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public String create(Model model, HttpServletRequest request) {
+		User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	//ham co vai tro bat nguoi dung dang nhap 1 lan. sau do chuyen nguoi dung qua muc tao don ,... thi no se giup minh luu thong tin nguoi mua luon	
+		System.out.println(currentUser.getUsername());
+		if(request.isUserInRole("ADMIN")) {
+			System.out.println("ADMIN");
+		}
 		model.addAttribute("customer", new Customer()); 
 		return "customer/create";
 }
@@ -40,7 +52,7 @@ public class CustomerController {
 	
 	
 	@GetMapping("/update")
-	public String update(@RequestParam("customer_id") int id, Model model){ 
+	public String update(@RequestParam("id") int id, Model model){ 
 		Customer customer = customerRepo.getById(id);
 		model.addAttribute("customer", customer);
 		return "customer/update.html";
@@ -51,10 +63,10 @@ public class CustomerController {
 		customerRepo.save(customer);
 		return "redirect:/customer/search";
 	}
-	
+	 
 	@GetMapping("/delete") // ?id=12
-	public String delete(HttpServletRequest req, @RequestParam("customer_id") int customer_id) {
-		customerRepo.deleteById(customer_id);
+	public String delete(HttpServletRequest req, @RequestParam("id") int id) {
+		customerRepo.deleteById(id);
 //		customerRepo.save(customerRepo.getById(id));
 		return "redirect:/customer/search";// url maping
 	}
@@ -72,8 +84,8 @@ public class CustomerController {
 //}
 
 	@GetMapping("/search")
-	public String search(Model model, @RequestParam(name = "customer_name", required = false) String name,
-			@RequestParam(name = "customer_id", required = false) Integer id,
+	public String search(Model model, @RequestParam(name = "name", required = false) String name,
+			@RequestParam(name = "id", required = false) Integer id,
 			@RequestParam(name = "page", required = false) Integer page,
 			@RequestParam(name = "size", required = false) Integer size) {
 		if (size == null)
@@ -81,7 +93,7 @@ public class CustomerController {
 		if (page == null)
 			page = 0;// trang hien tai
 
-		Pageable pageable = PageRequest.of(page, size, Sort.by("customer_id").ascending());
+		Pageable pageable = PageRequest.of(page, size, Sort.by("id").ascending());
 
 		if (name != null && !name.isEmpty()) {
 			Page<Customer> pageCustomer = customerRepo.search("%" + name + "%", pageable);
@@ -91,8 +103,8 @@ public class CustomerController {
 			model.addAttribute("totalPage", pageCustomer.getTotalPages());
 			model.addAttribute("page", page);
 			model.addAttribute("size", size);
-			model.addAttribute("customer_name", name);
-			model.addAttribute("customer_id", id);
+			model.addAttribute("name", name);
+			model.addAttribute("id", id);
 		} else if (id != null) {
 			Customer customer = customerRepo.findById(id).orElse(null);
 			if (customer != null) {
@@ -105,8 +117,8 @@ public class CustomerController {
 			model.addAttribute("totalPage", 1);
 			model.addAttribute("page", page);
 			model.addAttribute("size", size);
-			model.addAttribute("customer_name", name);
-			model.addAttribute("customer_id", id);
+			model.addAttribute("name", name);
+			model.addAttribute("id", id);
 		} else {
 			Page<Customer> pageCustomer = customerRepo.findAll(pageable);
 
@@ -115,8 +127,8 @@ public class CustomerController {
 			model.addAttribute("totalPage", pageCustomer.getTotalPages());
 			model.addAttribute("page", page);
 			model.addAttribute("size", size);
-			model.addAttribute("customer_name", name);
-			model.addAttribute("customer_id", id);
+			model.addAttribute("name", name);
+			model.addAttribute("id", id);
 		}
 		return "customer/search";
 	}

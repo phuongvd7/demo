@@ -38,7 +38,7 @@ public class ProductController {
 	@PostMapping("/create")
 	public String create(@ModelAttribute Product product) {
 		productRepo.save(product);
-		return "product/search";
+		return "product/create";
 	}
 	
 	
@@ -97,8 +97,8 @@ public String search(Model model, @RequestParam(name = "name", required = false)
 		model.addAttribute("totalPage", pageProduct.getTotalPages());
 		model.addAttribute("page", page);
 		model.addAttribute("size", size);
-		model.addAttribute("customer_name", name);
-		model.addAttribute("customer_id", id);
+		model.addAttribute("name", name);
+		model.addAttribute("id", id);
 	} else if (id != null) {
 		Product product = productRepo.findById(id).orElse(null);
 		if (product != null) {

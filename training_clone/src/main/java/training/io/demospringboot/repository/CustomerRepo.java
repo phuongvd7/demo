@@ -11,7 +11,7 @@ import training.io.demospringboot.entity.Customer;
 public interface CustomerRepo extends JpaRepository<Customer,Integer>{
 
 		// JQL
-	@Query("SELECT c FROM Customer c WHERE c.customer_name LIKE :x")
+	@Query("SELECT c FROM Customer c WHERE c.name LIKE :x")
 	Page<Customer> search(@Param("x") String s, Pageable pageable);
 //	List<Customer> search(@Param("x") String s);
 }

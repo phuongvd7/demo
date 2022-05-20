@@ -3,6 +3,7 @@ package training.io.demospringboot.entity;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -20,8 +21,10 @@ import lombok.Data;
 public class Customer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int customer_id;
-	private String customer_name;
+	@Column(name="customer_id")
+	private int id;
+	@Column(name="customer_name")
+	private String name;
 	private String address;
 	private int sdt;
 	

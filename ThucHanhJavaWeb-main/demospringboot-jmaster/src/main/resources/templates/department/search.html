@@ -17,7 +17,16 @@
 					<div class="col-12 col-md-4">
 						<input type="text" class="form-control" name="id"
 							placeholder="Tìm kiếm theo Id:...">
+						
 					</div>
+					
+						<div class="col-12 col-md-4">
+						<select name = "sortBy">
+						<option value="">chon</option>
+						<option value="name">ten</option>
+						<option value="date">ngay tao</option>
+						</select>
+						</div>
 					<div class="col-12 col-md-2">
 						<button type="submit" class="btn btn-primary">Search</button>
 					</div>
@@ -52,7 +61,7 @@
 			</table>
 			<ul class="pagination">
 				<li class="page-item"><a class="page-link" 
-				th:href="@{'/department/search?page='+ ${page - 1 < 0 ? 0 : (page - 1)} + '&name=' + ${name}}">Previous</a></li>
+				th:href="@{'/department/search?page='+ ${page - 1 < 0 ? 0 : (page - 1)} + '&sortBy=' + ${sortBy}}">Previous</a></li>
 
 				<li th:if="${totalPage > 0}" th:each="i: ${#numbers.sequence(0, totalPage - 1)}"
 					class="page-item"><a class="page-link"

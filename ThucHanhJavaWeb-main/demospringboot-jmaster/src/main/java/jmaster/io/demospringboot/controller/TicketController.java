@@ -70,6 +70,7 @@ public class TicketController {
 		oldOne.setContent(ticket.getContent());
 		//set them
 		ticketRepo.save(oldOne);
+		
 		return "redirect:/ticket/search";
 	}
 
